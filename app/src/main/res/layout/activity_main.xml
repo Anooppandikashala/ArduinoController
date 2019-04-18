@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_gravity="top"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:gravity="center"
+        android:layout_height="30dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begin"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/start_button"
+            android:id="@+id/buttonStart"
+            android:onClick="onClickStart"/>
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/stop_button"
+            android:id="@+id/buttonStop"
+            android:onClick="onClickStop"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/clear_button"
+            android:id="@+id/buttonClear"
+            android:onClick="onClickClear"/>
+
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="5"-->
+        <!--android:padding="2dp"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<EditText-->
+            <!--android:layout_weight="4"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_height="45dp"-->
+            <!--android:id="@+id/editText"-->
+            <!--android:hint="Enter your Data"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1.0"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:text="Send"-->
+            <!--android:background="@drawable/start_button"-->
+            <!--android:id="@+id/buttonSend"-->
+            <!--android:onClick="onClickSend"-->
+            <!--/>-->
+
+
+    <!--</LinearLayout>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:padding="0dp"
+        android:hint="Logs Here"
+        android:layout_height="80dp"
+        android:textIsSelectable="true"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="#08107b"
+        android:id="@+id/textView"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/messages_view"
+        android:layout_weight="2"
+        android:divider="#fff"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/input_placeholder"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:text="" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:id="@+id/buttonSend"
+            android:padding="20dp"
+            android:onClick="onClickSend"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_send_black_24dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
