@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     public final String ACTION_USB_PERMISSION = "com.myprojects.anoop.arduinocontroller.USB_PERMISSION";
 
+    public  String stringReceived="";
+
 
     Button startButton,  clearButton, stopButton;
     ImageButton sendButton;
@@ -51,16 +53,52 @@ public class MainActivity extends AppCompatActivity {
                 if (!data.isEmpty()) {
                     tvAppend(textView, data);
 
-                    MemberData newMemberData = new MemberData("Arduino", "#3F51B5");
-                    boolean belongsToCurrentUser = false;
-                    final Message message = new Message(data, newMemberData, belongsToCurrentUser);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            messageAdapter.add(message);
-                            messagesView.setSelection(messagesView.getCount() - 1);
+                    if (data.equals("$"))
+                    {
+                        if(!stringReceived.isEmpty())
+                        {
+                            data = stringReceived;
+                            MemberData newMemberData = new MemberData("Arduino", "#3F51B5");
+                            boolean belongsToCurrentUser = false;
+                            final Message message = new Message(data, newMemberData, belongsToCurrentUser);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageAdapter.add(message);
+                                    messagesView.setSelection(messagesView.getCount() - 1);
+                                }
+                            });
+
                         }
-                    });
+                        stringReceived = "";
+
+                    }
+                    else if(data.contains("$"))
+                    {
+                        data = data.replace("$","");
+                        stringReceived = stringReceived + data;
+                        if(!stringReceived.isEmpty())
+                        {
+                            data = stringReceived;
+                            MemberData newMemberData = new MemberData("Arduino", "#3F51B5");
+                            boolean belongsToCurrentUser = false;
+                            final Message message = new Message(data, newMemberData, belongsToCurrentUser);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageAdapter.add(message);
+                                    messagesView.setSelection(messagesView.getCount() - 1);
+                                }
+                            });
+
+                        }
+                        stringReceived = "";
+                    }
+                    else
+                    {
+                        stringReceived = stringReceived + data;
+                    }
+
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -136,33 +174,33 @@ public class MainActivity extends AppCompatActivity {
 
         MemberData data = new MemberData();
 
-        new UsbSerialInterface.UsbReadCallback() {
-            @Override
-            public void onReceivedData(byte[] bytes) {
-                //do something with bytes
-                String data = null;
-                try {
-                    data = new String(bytes, "UTF-8");
-                    if (!data.isEmpty()) {
-                        tvAppend(textView, data);
-
-                        MemberData newMemberData = new MemberData("Arduino", "#3F51B5");
-                        boolean belongsToCurrentUser = false;
-                        final Message message = new Message(data, newMemberData, belongsToCurrentUser);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                messageAdapter.add(message);
-                                messagesView.setSelection(messagesView.getCount() - 1);
-                            }
-                        });
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
+//        new UsbSerialInterface.UsbReadCallback() {
+//            @Override
+//            public void onReceivedData(byte[] bytes) {
+//                //do something with bytes
+//                String data = null;
+//                try {
+//                    data = new String(bytes, "UTF-8");
+//                    if (!data.isEmpty()) {
+//                        tvAppend(textView, data);
+//
+//                        MemberData newMemberData = new MemberData("Arduino", "#3F51B5");
+//                        boolean belongsToCurrentUser = false;
+//                        final Message message = new Message(data, newMemberData, belongsToCurrentUser);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                messageAdapter.add(message);
+//                                messagesView.setSelection(messagesView.getCount() - 1);
+//                            }
+//                        });
+//                    }
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        };
     }
 
     public void setUiEnabled(boolean bool) {
@@ -237,9 +275,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSend(View view) {
         String string = editText.getText().toString();
+        String stringToSend = string+"$";
 
         if(!string.isEmpty()){
-            serialPort.write(string.getBytes());
+            serialPort.write(stringToSend.getBytes());
             tvAppend(textView, "\nData Sent : " + string + "\n");
 
             MemberData newMemberData = new MemberData(string,"#3F51B5");
